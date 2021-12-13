@@ -81,18 +81,9 @@ def get_vaccine_records(name, logins):
 
     # menu vaccine
     #vaccine_menu = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.ID, "treeview-1013-record-3")))
-    menu = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//div[@role = 'rowgroup' and @tabindex='0']")))
-    soup = BeautifulSoup(menu.get_attribute("innerHTML"), "html.parser")
-    divs = soup.findAll("div")
-    for div in divs:
-        tables = div.findAll("table")
-        if len(tables) > 0:
-            for table in tables:
-                contents = table.decode_contents()
-                if re.match(".*(Vaccine).*", contents):
-                    table_id = table.get("id")
 
-    vaccine_menu = driver.find_element_by_id(table_id)
+
+    vaccine_menu = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//*[text()[contains(., 'Vaccine')]]")))
     action = ActionChains(driver)
     action.double_click(vaccine_menu).perform()
 
