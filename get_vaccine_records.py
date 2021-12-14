@@ -6,6 +6,12 @@ import pandas as pd
 
 
 if __name__ == "__main__":
+    from configparser import ConfigParser
+
+    conf = ConfigParser()
+    conf.read("config.ini", encoding="utf8")
+    logins = conf._sections['credentials']
+
     filename = argv[1]
     filetype = filename.split(".")[-1]
     if filetype in ["xlsx", "xls"]:
@@ -14,7 +20,7 @@ if __name__ == "__main__":
         cids = pd.read_csv(filename, dtype={argv[2]: "str"})[argv[2]]
     cid = cids.iloc[0]
     print(cid)
-    status, vaccine_records = get_vaccine_records(cid)
+    status, vaccine_records = get_vaccine_records(cid, logins)
     print(status, vaccine_records)
 
 
@@ -38,7 +44,7 @@ if __name__ == "__main__":
 
     for cid in cids.iloc[1:]:
         print(cid)
-        status, vaccine_record = get_vaccine_records(cid)
+        status, vaccine_record = get_vaccine_records(cid, logins)
         print(status, vaccine_record)
 
 
@@ -59,6 +65,8 @@ if __name__ == "__main__":
             vaccine_record['cid'] = cid
 
         print(status, vaccine_record)
-        vaccine_records = pd.concat([vaccine_records, vaccine_record])
 
-        vaccine_records.to_csv(argv[3], index=False)
+        vaccine_records_long = pd.concat([vaccine_records, vaccine_record])
+        vaccine_records_wide = vaccine_records_long.set_index(['cid', 'ลำดับ', 'ผู้ผลิต']).unstack('ลำดับ')
+        with pd.ExcelWriter(argv[3]) as writer:
+            vaccine_records_long.to_excel(writer, sheet_name="long", index=False)

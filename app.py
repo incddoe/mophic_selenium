@@ -1,4 +1,3 @@
-# Test
 from selenium import webdriver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
@@ -9,8 +8,10 @@ import pandas as pd
 import re
 from selenium.webdriver.chrome.options import Options
 from configparser import ConfigParser
+
 conf = ConfigParser()
 conf.read("config.ini", encoding="utf8")
+
 logins = conf._sections['credentials']
 chrome_options = Options()
 chrome_options.add_argument("--headless")
