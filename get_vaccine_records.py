@@ -42,8 +42,8 @@ if __name__ == "__main__":
 
     print(status, vaccine_records)
 
-    for cid in cids.iloc[1:]:
-        print(cid)
+    for i, cid in enumerate(cids.iloc[1:]):
+        print(f"{i+1} of {cids.shape[0]} : {cid}")
         status, vaccine_record = get_vaccine_records(cid, logins)
         print(status, vaccine_record)
 
