@@ -100,7 +100,7 @@ def get_vaccine_records(name, logins):
     try:
         #record = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, "#gridview-1020 td")))
         #record_xpath = "//div[@role='dialog']/div/div/div/div/div/div/div/div[4]/div/div/div/div/div/div/div/div[@role='presentation']/div[2]/div/div/div/div/div/div/div/div/div/div[@role='grid']/div/div[@role='presentation']/div/div[@role='presentation' and @class='x-grid-item-container']/table/tbody/tr[1]"
-        record_xpath = "//div[4]//div[@role='presentation' and @class='x-grid-item-container']/table/tbody/tr[1]"
+        record_xpath = "//div[4]//div[@role='presentation' and @class='x-grid-item-container']/table/[1]"
         record = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, record_xpath)))
     except:
         record = "Failed"
