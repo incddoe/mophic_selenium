@@ -66,7 +66,6 @@ if __name__ == "__main__":
 
         print(status, vaccine_record)
 
-        vaccine_records_long = pd.concat([vaccine_records, vaccine_record])
-        vaccine_records_wide = vaccine_records_long.set_index(['cid', 'ลำดับ', 'ผู้ผลิต']).unstack('ลำดับ')
-        with pd.ExcelWriter(argv[3]) as writer:
-            vaccine_records_long.to_excel(writer, sheet_name="long", index=False)
+        vaccine_records = pd.concat([vaccine_records, vaccine_record])
+
+        vaccine_records.to_csv(argv[3], index=False)
